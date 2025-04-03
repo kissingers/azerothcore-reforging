@@ -17,14 +17,15 @@ public:
 
     void OnAfterConfigLoad(bool reload) override
     {
-        if (reload)
+        bool reforgeEnableChanged = reload && sItemReforge->GetEnabled() != sConfigMgr->GetOption<bool>("Reforging.Enable", true);
+        if (reforgeEnableChanged)
             sItemReforge->HandleReload(false);
 
         sItemReforge->SetEnabled(sConfigMgr->GetOption<bool>("Reforging.Enable", true));
         sItemReforge->SetReforgeableStats(sConfigMgr->GetOption<std::string>("Reforging.ReforgeableStats", ItemReforge::DefaultReforgeableStats));
         sItemReforge->SetPercentage(sConfigMgr->GetOption<float>("Reforging.Percentage", ItemReforge::PERCENTAGE_DEFAULT));
 
-        if (reload)
+        if (reforgeEnableChanged)
             sItemReforge->HandleReload(true);
     }
 
