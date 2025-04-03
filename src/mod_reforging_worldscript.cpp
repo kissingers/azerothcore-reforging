@@ -17,15 +17,16 @@ public:
 
     void OnAfterConfigLoad(bool reload) override
     {
-        if (reload)
-            sItemReforge->HandleReload(false);
+        //reload配置时候，模块开启与否影响装备效果呈现，其他3个配置文件不影响，故只要考虑reload时候，模块启用是否有变化，有变化则需要刷新用户属性
+    	bool ReforgeConfigChanged = reload && sItemReforge->GetEnabled() != sConfigMgr->GetOption<bool>("Reforging.Enable", true);
 
         sItemReforge->SetEnabled(sConfigMgr->GetOption<bool>("Reforging.Enable", true));
         sItemReforge->SetReforgeableStats(sConfigMgr->GetOption<std::string>("Reforging.ReforgeableStats", ItemReforge::DefaultReforgeableStats));
         sItemReforge->SetPercentage(sConfigMgr->GetOption<float>("Reforging.Percentage", ItemReforge::PERCENTAGE_DEFAULT));
+        sItemReforge->SetNeedMoney(sConfigMgr->GetOption<uint32>("Reforging.NeedMoney", ItemReforge::NEEDMONEY_DEFAULT));
 
-        if (reload)
-            sItemReforge->HandleReload(true);
+        if (ReforgeConfigChanged)
+            sItemReforge->HandleReload();
     }
 
     void OnBeforeWorldInitialized() override
