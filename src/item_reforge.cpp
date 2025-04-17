@@ -16,6 +16,7 @@ ItemReforge::ItemReforge()
 {
     enabled = true;
     percentage = PERCENTAGE_DEFAULT;
+    NeedMoney = NEEDMONEY_DEFAULT;
 }
 
 ItemReforge::~ItemReforge() {}
@@ -69,6 +70,19 @@ void ItemReforge::SetPercentage(float value)
 float ItemReforge::GetPercentage() const
 {
     return percentage;
+}
+
+void ItemReforge::SetNeedMoney(uint32 value)
+{
+    if (value < 0)
+		NeedMoney = NEEDMONEY_DEFAULT;
+	else
+	    NeedMoney = value;
+}
+
+uint32 ItemReforge::GetNeedMoney() const
+{
+    return NeedMoney;
 }
 
 void ItemReforge::CleanupDB() const
@@ -184,71 +198,71 @@ std::string ItemReforge::GetSlotName(uint8 slot) const
     switch (slot)
     {
         case EQUIPMENT_SLOT_HEAD:
-            return "Head";
+            return "头部";
         case EQUIPMENT_SLOT_NECK:
-            return "Neck";
+            return "颈部";
         case EQUIPMENT_SLOT_SHOULDERS:
-            return "Shoulders";
+            return "肩膀";
         case EQUIPMENT_SLOT_BODY:
-            return "Shirt";
+            return "衬衣";
         case EQUIPMENT_SLOT_CHEST:
-            return "Chest";
+            return "胸部";
         case EQUIPMENT_SLOT_WAIST:
-            return "Waist";
+            return "腰部";
         case EQUIPMENT_SLOT_LEGS:
-            return "Legs";
+            return "腿部";
         case EQUIPMENT_SLOT_FEET:
-            return "Feet";
+            return "脚";
         case EQUIPMENT_SLOT_WRISTS:
-            return "Wrists";
+            return "手腕";
         case EQUIPMENT_SLOT_HANDS:
-            return "Hands";
+            return "手";
         case EQUIPMENT_SLOT_FINGER1:
-            return "Finger 1";
+            return "手指一";
         case EQUIPMENT_SLOT_FINGER2:
-            return "Finger 2";
+            return "手指二";
         case EQUIPMENT_SLOT_TRINKET1:
-            return "Trinket 1";
+            return "饰品一";
         case EQUIPMENT_SLOT_TRINKET2:
-            return "Trinket 2";
+            return "饰品二";
         case EQUIPMENT_SLOT_BACK:
-            return "Back";
+            return "披风";
         case EQUIPMENT_SLOT_MAINHAND:
-            return "Main Hand";
+            return "主手";
         case EQUIPMENT_SLOT_OFFHAND:
-            return "Off Hand";
+            return "副手";
         case EQUIPMENT_SLOT_RANGED:
-            return "Ranged";
+            return "远程";
         case EQUIPMENT_SLOT_TABARD:
-            return "Tabard";
+            return "战袍";
         default:
-            return "Unknown";
+            return "未知";
     }
 }
 
 std::string ItemReforge::StatTypeToString(uint32 statType) const
 {
     static std::unordered_map<uint32, std::string> statTypeToStrMap = {
-        {ITEM_MOD_MANA, "Mana"}, {ITEM_MOD_HEALTH, "Health"}, {ITEM_MOD_AGILITY, "Agility"},
-        {ITEM_MOD_STRENGTH, "Strength"}, {ITEM_MOD_INTELLECT, "Intellect"}, {ITEM_MOD_SPIRIT, "Spirit"},
-        {ITEM_MOD_STAMINA, "Stamina"}, {ITEM_MOD_DEFENSE_SKILL_RATING, "Defense Rating"}, {ITEM_MOD_DODGE_RATING, "Dodge Rating"},
-        {ITEM_MOD_PARRY_RATING, "Parry Rating"}, {ITEM_MOD_BLOCK_RATING, "Block Rating"}, {ITEM_MOD_HIT_MELEE_RATING, "Melee Hit Rating"},
-        {ITEM_MOD_HIT_RANGED_RATING, "Ranged Hit Rating"}, {ITEM_MOD_HIT_SPELL_RATING, "Spell Hit Rating"}, {ITEM_MOD_CRIT_MELEE_RATING, "Melee Crit Rating"},
-        {ITEM_MOD_CRIT_RANGED_RATING, "Ranged Crit Rating"}, {ITEM_MOD_CRIT_SPELL_RATING, "Spell Crit Rating"}, {ITEM_MOD_HIT_TAKEN_MELEE_RATING, "Melee Hit Taken Rating"},
-        {ITEM_MOD_HIT_TAKEN_RANGED_RATING, "Ranged Hit Taken Rating"}, {ITEM_MOD_HIT_TAKEN_SPELL_RATING, "Spell Hit Taken Rating"}, {ITEM_MOD_CRIT_TAKEN_MELEE_RATING, "Melee Crit Taken Rating"},
-        {ITEM_MOD_CRIT_TAKEN_RANGED_RATING, "Ranged Crit Taken Rating"}, {ITEM_MOD_CRIT_TAKEN_SPELL_RATING, "Spell Crit Taken Rating"}, {ITEM_MOD_HASTE_MELEE_RATING, "Melee Haste Rating"},
-        {ITEM_MOD_HASTE_RANGED_RATING, "Ranged Haste Rating"}, {ITEM_MOD_HASTE_SPELL_RATING, "Spell Haste Rating"}, {ITEM_MOD_HIT_RATING, "Hit Rating"},
-        {ITEM_MOD_CRIT_RATING, "Crit Rating"}, {ITEM_MOD_HIT_TAKEN_RATING, "Hit Taken Rating"}, {ITEM_MOD_CRIT_TAKEN_RATING, "Crit Taken Rating"},
-        {ITEM_MOD_RESILIENCE_RATING, "Resilience Rating"}, {ITEM_MOD_HASTE_RATING, "Haste Rating"}, {ITEM_MOD_EXPERTISE_RATING, "Expertise"},
-        {ITEM_MOD_ATTACK_POWER, "Attack Power"}, {ITEM_MOD_RANGED_ATTACK_POWER, "Ranged Attack Power"}, {ITEM_MOD_MANA_REGENERATION, "Mana Regen"},
-        {ITEM_MOD_ARMOR_PENETRATION_RATING, "Armor Penetration"}, {ITEM_MOD_SPELL_POWER, "Spell Power"}, {ITEM_MOD_HEALTH_REGEN, "HP Regen"},
-        {ITEM_MOD_SPELL_PENETRATION, "Spell Penetration"}, {ITEM_MOD_BLOCK_VALUE, "Block Value"}
+        {ITEM_MOD_MANA, "法力"}, {ITEM_MOD_HEALTH, "治疗"}, {ITEM_MOD_AGILITY, "敏捷"},
+        {ITEM_MOD_STRENGTH, "力量"}, {ITEM_MOD_INTELLECT, "智力"}, {ITEM_MOD_SPIRIT, "精神"},
+        {ITEM_MOD_STAMINA, "耐力"}, {ITEM_MOD_DEFENSE_SKILL_RATING, "防御"}, {ITEM_MOD_DODGE_RATING, "躲闪"},
+        {ITEM_MOD_PARRY_RATING, "招架"}, {ITEM_MOD_BLOCK_RATING, "格挡"}, {ITEM_MOD_HIT_MELEE_RATING, "近战命中"},
+        {ITEM_MOD_HIT_RANGED_RATING, "远程命中"}, {ITEM_MOD_HIT_SPELL_RATING, "技能命中"}, {ITEM_MOD_CRIT_MELEE_RATING, "近战暴击"},
+        {ITEM_MOD_CRIT_RANGED_RATING, "远程暴击"}, {ITEM_MOD_CRIT_SPELL_RATING, "法术暴击"}, {ITEM_MOD_HIT_TAKEN_MELEE_RATING, "近战被命中"},
+        {ITEM_MOD_HIT_TAKEN_RANGED_RATING, "远程被命中"}, {ITEM_MOD_HIT_TAKEN_SPELL_RATING, "法术被命中"}, {ITEM_MOD_CRIT_TAKEN_MELEE_RATING, "近战被暴击"},
+        {ITEM_MOD_CRIT_TAKEN_RANGED_RATING, "远程被暴击"}, {ITEM_MOD_CRIT_TAKEN_SPELL_RATING, "法术被暴击"}, {ITEM_MOD_HASTE_MELEE_RATING, "近战急速"},
+        {ITEM_MOD_HASTE_RANGED_RATING, "远程急速"}, {ITEM_MOD_HASTE_SPELL_RATING, "法术急速"}, {ITEM_MOD_HIT_RATING, "命中"},
+        {ITEM_MOD_CRIT_RATING, "暴击"}, {ITEM_MOD_HIT_TAKEN_RATING, "被命中"}, {ITEM_MOD_CRIT_TAKEN_RATING, "被暴击"},
+        {ITEM_MOD_RESILIENCE_RATING, "韧性"}, {ITEM_MOD_HASTE_RATING, "急速"}, {ITEM_MOD_EXPERTISE_RATING, "精准"},
+        {ITEM_MOD_ATTACK_POWER, "近战攻强"}, {ITEM_MOD_RANGED_ATTACK_POWER, "远程攻强"}, {ITEM_MOD_MANA_REGENERATION, "法力恢复"},
+        {ITEM_MOD_ARMOR_PENETRATION_RATING, "护甲穿透"}, {ITEM_MOD_SPELL_POWER, "法术强度"}, {ITEM_MOD_HEALTH_REGEN, "生命恢复"},
+        {ITEM_MOD_SPELL_PENETRATION, "法术穿透"}, {ITEM_MOD_BLOCK_VALUE, "格挡值"}
     };
 
     if (statTypeToStrMap.find(statType) != statTypeToStrMap.end())
         return statTypeToStrMap.at(statType);
 
-    return "unknown";
+    return "未知";
 }
 
 bool ItemReforge::IsReforgeable(const Player* player, const Item* item) const
@@ -351,6 +365,12 @@ bool ItemReforge::Reforge(Player* player, ObjectGuid itemGuid, uint32 statDecrea
     if (FindItemStat(itemStats, statIncrease) != nullptr)
         return false;
 
+    if (!player->HasEnoughMoney(GetNeedMoney()))
+    {
+        ItemReforge::SendMessage(player, "你没有足够的钱重铸");
+        return false;
+	}
+
     player->_ApplyItemMods(item, item->GetSlot(), false);
 
     uint32 value = CalculateReforgePct(decreasedStat->ItemStatValue);
@@ -368,7 +388,7 @@ bool ItemReforge::Reforge(Player* player, ObjectGuid itemGuid, uint32 statDecrea
         reforgingData.guid, reforgingData.item_guid, statDecrease, statIncrease, value);
 
     SendItemPacket(player, item);
-
+    player->ModifyMoney(- GetNeedMoney());
     return true;
 }
 
@@ -783,7 +803,7 @@ void ItemReforge::SendItemPackets(Player* player) const
 {
     std::vector<Item*> items = GetPlayerItems(player, true);
     std::vector<Item*>::const_iterator itr = items.begin();
-    for (itr; itr != items.end(); ++itr)
+    for (/* itr */; itr != items.end(); ++itr)
         SendItemPacket(player, *itr);
 }
 
@@ -791,7 +811,7 @@ void ItemReforge::HandleReload(Player* player, bool apply) const
 {
     std::vector<Item*> playerItems = GetPlayerItems(player, true);
     std::vector<Item*>::iterator iter = playerItems.begin();
-    for (iter; iter != playerItems.end(); ++iter)
+    for (/* itr */; iter != playerItems.end(); ++iter)
     {
         Item* item = *iter;
         if (apply)

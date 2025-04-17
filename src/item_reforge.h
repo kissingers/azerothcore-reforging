@@ -28,6 +28,7 @@ private:
     bool enabled;
     std::vector<uint32> reforgeableStats;
     float percentage;
+	uint32 NeedMoney; 
 
 	ItemReforge();
 	~ItemReforge();
@@ -40,9 +41,10 @@ private:
 
     static std::string TextWithColor(const std::string& text, const std::string& color);
 public:
-    static constexpr const char* DefaultReforgeableStats = "6,13,14,31,32,36,37";
+    static constexpr const char* DefaultReforgeableStats = "6,12,13,14,15,31,32,35,36,37,43,44";
     static constexpr float PERCENTAGE_DEFAULT = 40.0f;
     static constexpr int VISUAL_FEEDBACK_SPELL_ID = 46331;
+    static constexpr uint32 NEEDMONEY_DEFAULT = 80000;
 
 	static ItemReforge* instance();
 
@@ -53,7 +55,8 @@ public:
     const std::vector<uint32>& GetReforgeableStats() const;
     void SetPercentage(float value);
     float GetPercentage() const;
-
+    void SetNeedMoney(uint32 value);
+    uint32 GetNeedMoney() const;
     void LoadFromDB();
 
     std::string GetSlotIcon(uint8 slot, uint32 width = 30, uint32 height = 30, int x = 0, int y = 0) const;
