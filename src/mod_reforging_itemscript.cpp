@@ -12,7 +12,7 @@ public:
 
     bool CanItemRemove(Player* player, Item* item) override
     {
-        sItemReforge->RemoveReforge(player, item, true);
+        sItemReforge->RemoveReforge(player, item);
         return true;
     }
 };
