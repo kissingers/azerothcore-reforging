@@ -39,7 +39,7 @@ public:
 
     void OnPlayerAfterMoveItemFromInventory(Player* player, Item* it, uint8 /*bag*/, uint8 /*slot*/, bool /*update*/) override
     {
-        sItemReforge->RemoveReforge(player, it, true);
+        sItemReforge->RemoveReforge(player, it);
     }
 
     void OnPlayerDeleteFromDB(CharacterDatabaseTransaction trans, uint32 guid) override

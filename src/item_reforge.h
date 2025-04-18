@@ -76,7 +76,7 @@ public:
     std::vector<Item*> GetPlayerItems(const Player* player, bool inBankAlso) const;
     bool CanRemoveReforge(const Item* item) const;
     bool RemoveReforge(Player* player, ObjectGuid itemGuid);
-    bool RemoveReforge(Player* player, Item* item, bool force = false);
+    bool RemoveReforge(Player* player, Item* item);
     void VisualFeedback(Player* player);
     void HandleCharacterRemove(uint32 guid);
 

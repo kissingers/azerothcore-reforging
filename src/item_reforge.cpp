@@ -429,15 +429,21 @@ bool ItemReforge::RemoveReforge(Player* player, ObjectGuid itemGuid)
     return RemoveReforge(player, player->GetItemByGuid(itemGuid));
 }
 
-bool ItemReforge::RemoveReforge(Player* player, Item* item, bool force)
+bool ItemReforge::RemoveReforge(Player* player, Item* item)
 {
-    if (!force && !CanRemoveReforge(item))
+    if (!item || !IsAlreadyReforged(item))
         return false;
 
-    player->_ApplyItemMods(item, item->GetSlot(), false);
-    reforgingDataMap.erase(item->GetGUID().GetCounter());
-    player->_ApplyItemMods(item, item->GetSlot(), true);
+    bool equipped = item->IsEquipped();
 
+    if (equipped)
+        player->_ApplyItemMods(item, item->GetSlot(), false);
+
+    reforgingDataMap.erase(item->GetGUID().GetCounter());
+
+    if (equipped)
+        player->_ApplyItemMods(item, item->GetSlot(), true);
+    
     CharacterDatabase.Execute("DELETE FROM character_reforging WHERE item_guid = {}", item->GetGUID().GetCounter());
 
     SendItemPacket(player, item);
